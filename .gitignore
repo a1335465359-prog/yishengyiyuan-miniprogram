@@ -7,3 +7,4 @@ admin/uploads/
 .DS_Store
 Thumbs.db
 project.private.config.json
+cloudfunctions/*/node_modules/
