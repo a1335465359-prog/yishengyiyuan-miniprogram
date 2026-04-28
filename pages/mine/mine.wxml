@@ -1,0 +1,40 @@
+<view class="mine">
+  <!-- 用户信息 -->
+  <view class="mine-header">
+    <view class="mine-avatar">
+      <text class="mine-avatar-text">缘</text>
+    </view>
+    <text class="mine-name">有 缘 人</text>
+    <text class="mine-desc">一绳一愿 · 善信</text>
+  </view>
+
+  <!-- 菜单 -->
+  <view class="mine-menu">
+    <button class="mine-btn" open-type="contact">
+      <view class="mine-btn-icon mine-btn-icon-service">客</view>
+      <text class="mine-btn-text">联系客服</text>
+      <text class="mine-btn-arrow">›</text>
+    </button>
+
+    <view class="mine-btn" bindtap="showAbout">
+      <view class="mine-btn-icon mine-btn-icon-about">关</view>
+      <text class="mine-btn-text">关于一绳一愿</text>
+      <text class="mine-btn-arrow">›</text>
+    </view>
+
+    <button class="mine-btn" open-type="share">
+      <view class="mine-btn-icon mine-btn-icon-share">分</view>
+      <text class="mine-btn-text">分享给好友</text>
+      <text class="mine-btn-arrow">›</text>
+    </button>
+  </view>
+
+  <!-- 文化格言 -->
+  <view class="mine-quote">
+    <text class="mine-quote-text">一绳一愿 · 吉祥圆满</text>
+    <text class="mine-quote-sub">藏式手工编织 · 传承东方之美</text>
+  </view>
+
+  <!-- 版本 -->
+  <text class="mine-version">一绳一愿 v1.0.0</text>
+</view>

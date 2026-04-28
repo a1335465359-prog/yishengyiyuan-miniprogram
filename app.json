@@ -1,0 +1,50 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/category",
+    "pages/detail/detail",
+    "pages/story/story",
+    "pages/mine/mine"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#f5f0e8",
+    "navigationBarTitleText": "一绳一愿",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f0e8"
+  },
+  "tabBar": {
+    "color": "#7a6a5a",
+    "selectedColor": "#8b1e1e",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab_home.png",
+        "selectedIconPath": "images/tab_home_active.png"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "text": "愿物",
+        "iconPath": "images/tab_wish.png",
+        "selectedIconPath": "images/tab_wish_active.png"
+      },
+      {
+        "pagePath": "pages/story/story",
+        "text": "故事",
+        "iconPath": "images/tab_story.png",
+        "selectedIconPath": "images/tab_story_active.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/tab_mine.png",
+        "selectedIconPath": "images/tab_mine_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

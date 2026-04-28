@@ -1,0 +1,44 @@
+<view class="home">
+  <!-- 全屏背景 -->
+  <image class="home-bg" src="/images/home_banner1.png" mode="aspectFill" />
+  <view class="home-shade"></view>
+  
+  <!-- 品牌 -->
+  <view class="home-top">
+    <text class="home-en">YI SHENG YI YUAN</text>
+    <text class="home-name">一绳一愿</text>
+    <view class="home-divider">
+      <view class="home-dot"></view>
+      <view class="home-dot"></view>
+      <view class="home-dot"></view>
+    </view>
+    <text class="home-tag">藏式手绳 · 护佑项链</text>
+  </view>
+  
+  <!-- 双入口 -->
+  <view class="home-entries">
+    <view class="home-entry" bindtap="goToCategory" data-type="bracelet">
+      <image class="home-entry-bg" src="/images/bracelet_full.jpg" mode="aspectFill" />
+      <view class="home-entry-veil"></view>
+      <view class="home-entry-cap">
+        <text class="home-entry-zh">手 绳</text>
+        <text class="home-entry-en">BRACELET</text>
+      </view>
+    </view>
+    <view class="home-entry" bindtap="goToCategory" data-type="necklace">
+      <image class="home-entry-bg" src="/images/zajilamu_thangka.jpg" mode="aspectFill" />
+      <view class="home-entry-veil"></view>
+      <view class="home-entry-cap">
+        <text class="home-entry-zh">大 卡</text>
+        <text class="home-entry-en">NECKLACE</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 底部探索 -->
+  <view class="home-foot" bindtap="goToCategory" data-type="all">
+    <view class="home-foot-line"></view>
+    <text class="home-foot-text">探索全部愿物</text>
+    <view class="home-foot-line"></view>
+  </view>
+</view>

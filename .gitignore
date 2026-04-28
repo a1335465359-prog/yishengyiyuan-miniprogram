@@ -1,0 +1,9 @@
+admin/node_modules/
+admin/uploads/
+*.bak_*
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db
+project.private.config.json

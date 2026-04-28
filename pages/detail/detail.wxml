@@ -1,0 +1,88 @@
+<scroll-view class="container gradient-bg" scroll-y="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}" wx:if="{{product}}">
+  <!-- 大图 -->
+  <image class="detail-img" src="{{product.image}}" mode="widthFix" />
+
+  <!-- 信息区 -->
+  <view class="detail-info">
+    <view class="detail-badge">
+      <text>{{product.blessing}}</text>
+    </view>
+    <text class="detail-name">{{product.name}}</text>
+    <text class="detail-price">¥{{product.price}}</text>
+
+    <!-- 规格 -->
+    <view class="detail-specs">
+      <view class="spec-item">
+        <text class="spec-label">色系</text>
+        <text class="spec-value">{{product.color}}</text>
+      </view>
+      <view class="spec-item">
+        <text class="spec-label">材质</text>
+        <text class="spec-value">{{product.material}}</text>
+      </view>
+      <view class="spec-item">
+        <text class="spec-label">尺寸</text>
+        <text class="spec-value">{{product.size}}</text>
+      </view>
+      <view class="spec-item" wx:if="{{product.weight}}">
+        <text class="spec-label">重量</text>
+        <text class="spec-value">{{product.weight}}</text>
+      </view>
+    </view>
+
+    <!-- 生肖 -->
+    <view class="detail-zodiac" wx:if="{{product.zodiacStr}}">
+      <text class="zodiac-label">适合生肖</text>
+      <text class="zodiac-value">{{product.zodiacStr}}</text>
+    </view>
+  </view>
+
+  <!-- 老师/神佛介绍 -->
+  <view class="detail-section" wx:if="{{product.deityInfo}}">
+    <view class="section-header">
+      <view class="section-line"></view>
+      <text class="section-title">关于 {{product.deityInfo.name}}</text>
+      <view class="section-line"></view>
+    </view>
+    <text class="section-subtitle">{{product.deityInfo.title}}</text>
+    <text class="section-body">{{product.deityInfo.story}}</text>
+    <view class="culture-box" wx:if="{{product.deityInfo.culture}}">
+      <text>{{product.deityInfo.culture}}</text>
+    </view>
+    <text class="section-note" wx:if="{{product.deityInfo.taboos}}">※ {{product.deityInfo.taboos}}</text>
+  </view>
+
+  <!-- 工艺 -->
+  <view class="detail-section" wx:if="{{product.craft}}">
+    <view class="section-header">
+      <view class="section-line"></view>
+      <text class="section-title">工艺说明</text>
+      <view class="section-line"></view>
+    </view>
+    <text class="section-body">{{product.craft}}</text>
+  </view>
+
+  <!-- 推荐 -->
+  <view class="detail-section" wx:if="{{product.related && product.related.length > 0}}">
+    <view class="section-header">
+      <view class="section-line"></view>
+      <text class="section-title">更多推荐</text>
+      <view class="section-line"></view>
+    </view>
+    <view class="related-grid">
+      <view class="related-item" wx:for="{{product.related}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <image class="related-img" src="{{item.image}}" mode="aspectFill" />
+        <text class="related-name">{{item.name}}</text>
+        <text class="related-price">¥{{item.price}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 客服按钮 -->
+  <view class="detail-cta-wrap">
+    <button class="btn-gold detail-cta" open-type="contact">联系客服 · 请愿入盒</button>
+    <text class="cta-hint">点击唤起官方客服，为您专属定制</text>
+  </view>
+
+  <view style="height: 40rpx;"></view>
+</scroll-view>

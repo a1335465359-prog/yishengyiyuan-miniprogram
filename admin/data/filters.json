@@ -1,0 +1,111 @@
+{
+  "colors": [
+    {
+      "id": "c_all",
+      "name": "全部",
+      "value": "全部",
+      "sort": 0
+    },
+    {
+      "id": "c_zhusha",
+      "name": "朱砂",
+      "value": "朱砂",
+      "sort": 1
+    },
+    {
+      "id": "c_qingjin",
+      "name": "青金",
+      "value": "青金",
+      "sort": 2
+    },
+    {
+      "id": "c_songshi",
+      "name": "松石",
+      "value": "松石",
+      "sort": 3
+    },
+    {
+      "id": "c_yuebai",
+      "name": "月白",
+      "value": "月白",
+      "sort": 4
+    },
+    {
+      "id": "c_moyin",
+      "name": "墨银",
+      "value": "墨银",
+      "sort": 5
+    },
+    {
+      "id": "c_zitan",
+      "name": "紫檀",
+      "value": "紫檀",
+      "sort": 6
+    }
+  ],
+  "deities": [
+    {
+      "id": "d_all",
+      "name": "全部",
+      "value": "全部",
+      "sort": 0
+    },
+    {
+      "id": "d_zajilamu",
+      "name": "扎基拉姆",
+      "value": "扎基拉姆",
+      "sort": 1
+    },
+    {
+      "id": "d_bada",
+      "name": "八大守护",
+      "value": "八大守护",
+      "sort": 2
+    },
+    {
+      "id": "d_yaoshi",
+      "name": "药师佛",
+      "value": "药师佛",
+      "sort": 3
+    },
+    {
+      "id": "d_lvdumu",
+      "name": "绿度母",
+      "value": "绿度母",
+      "sort": 4
+    },
+    {
+      "id": "d_huxian",
+      "name": "狐仙",
+      "value": "狐仙",
+      "sort": 5
+    },
+    {
+      "id": "d_wenshu",
+      "name": "文殊菩萨",
+      "value": "文殊菩萨",
+      "sort": 6
+    },
+    {
+      "id": "d_guanyin",
+      "name": "观音菩萨",
+      "value": "观音菩萨",
+      "sort": 7
+    }
+  ],
+  "zodiacs": [
+    "全部",
+    "鼠",
+    "牛",
+    "虎",
+    "兔",
+    "龙",
+    "蛇",
+    "马",
+    "羊",
+    "猴",
+    "鸡",
+    "狗",
+    "猪"
+  ]
+}

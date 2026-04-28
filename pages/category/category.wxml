@@ -1,0 +1,122 @@
+<view class="cat">
+  <!-- 导航 -->
+  <view class="cat-nav">
+    <view class="cat-nav-left" bindtap="goBack">
+      <text class="cat-nav-back">‹</text>
+    </view>
+    <text class="cat-nav-title">愿 物</text>
+    <view class="cat-nav-right" bindtap="toggleDrawer">
+      <text class="cat-nav-filter">筛选</text>
+    </view>
+  </view>
+
+  <!-- 品类切换 -->
+  <view class="cat-switch">
+    <view class="cat-switch-item {{type === 'all' ? 'on' : ''}}" bindtap="switchType" data-type="all">全部</view>
+    <view class="cat-switch-item {{type === 'bracelet' ? 'on' : ''}}" bindtap="switchType" data-type="bracelet">手绳</view>
+    <view class="cat-switch-item {{type === 'necklace' ? 'on' : ''}}" bindtap="switchType" data-type="necklace">大卡</view>
+  </view>
+
+  <!-- 首款大图 -->
+  <view class="cat-hero" wx:if="{{heroProduct}}" bindtap="goToDetail" data-id="{{heroProduct.id}}">
+    <image class="cat-hero-bg" src="{{heroProduct.image}}" mode="aspectFill" />
+    <view class="cat-hero-mask"></view>
+    <view class="cat-hero-cap">
+      <text class="cat-hero-badge">{{heroProduct.blessing}}</text>
+      <text class="cat-hero-name">{{heroProduct.name}}</text>
+      <view class="cat-hero-row">
+        <text class="cat-hero-price">¥{{heroProduct.price}}</text>
+        <text class="cat-hero-deity">{{heroProduct.deity}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 网格标题 -->
+  <view class="cat-head" wx:if="{{gridProducts.length > 0}}">
+    <text class="cat-head-text">全 部 愿 物</text>
+    <view class="cat-head-line"></view>
+  </view>
+
+  <!-- 双列网格 -->
+  <view class="cat-grid">
+    <view class="cat-card" wx:for="{{gridProducts}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="cat-card-pic">
+        <image class="cat-card-img" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}" />
+        <text class="cat-card-tag" wx:if="{{item.blessing}}">{{item.blessing}}</text>
+      </view>
+      <view class="cat-card-body">
+        <text class="cat-card-title">{{item.name}}</text>
+        <view class="cat-card-foot">
+          <text class="cat-card-amount">¥{{item.price}}</text>
+          <text class="cat-card-deity">{{item.deity}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 只有1件 -->
+  <view class="cat-grid" wx:if="{{products.length === 1}}">
+    <view class="cat-card" wx:for="{{products}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="cat-card-pic">
+        <image class="cat-card-img" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}" />
+        <text class="cat-card-tag" wx:if="{{item.blessing}}">{{item.blessing}}</text>
+      </view>
+      <view class="cat-card-body">
+        <text class="cat-card-title">{{item.name}}</text>
+        <view class="cat-card-foot">
+          <text class="cat-card-amount">¥{{item.price}}</text>
+          <text class="cat-card-deity">{{item.deity}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空 -->
+  <view class="cat-empty" wx:if="{{products.length === 0 && !loading}}">
+    <text class="cat-empty-icon">📿</text>
+    <text class="cat-empty-text">暂无符合条件的愿物</text>
+  </view>
+
+  <view style="height: 80rpx;"></view>
+</view>
+
+<!-- 筛选抽屉 - 使用 draft 状态 -->
+<view class="drawer-mask {{showDrawer ? 'show' : ''}}" bindtap="closeDrawer" catchtouchmove="{{true}}"></view>
+<view class="drawer {{showDrawer ? 'show' : ''}}" catchtouchmove="{{true}}">
+  <view class="drawer-header">
+    <text class="drawer-title">筛选愿物</text>
+    <text class="drawer-close" bindtap="closeDrawer">✕</text>
+  </view>
+
+  <view class="drawer-body">
+    <view class="drawer-group">
+      <text class="drawer-label">系列</text>
+      <view class="drawer-tags">
+        <view class="drawer-tag {{draftType === 'all' ? 'active' : ''}}" bindtap="selectFilter" data-key="type" data-value="all">全部</view>
+        <view class="drawer-tag {{draftType === 'bracelet' ? 'active' : ''}}" bindtap="selectFilter" data-key="type" data-value="bracelet">手绳系列</view>
+        <view class="drawer-tag {{draftType === 'necklace' ? 'active' : ''}}" bindtap="selectFilter" data-key="type" data-value="necklace">大卡系列</view>
+      </view>
+    </view>
+
+    <view class="drawer-group">
+      <text class="drawer-label">色系</text>
+      <view class="drawer-tags">
+        <view class="drawer-tag {{draftColor === '全部' ? 'active' : ''}}" bindtap="selectFilter" data-key="color" data-value="全部">全部</view>
+        <view class="drawer-tag {{draftColor === item ? 'active' : ''}}" wx:for="{{filters.colors}}" wx:key="*this" bindtap="selectFilter" data-key="color" data-value="{{item}}">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="drawer-group">
+      <text class="drawer-label">老师</text>
+      <view class="drawer-tags">
+        <view class="drawer-tag {{draftDeity === '全部' ? 'active' : ''}}" bindtap="selectFilter" data-key="deity" data-value="全部">全部</view>
+        <view class="drawer-tag {{draftDeity === item ? 'active' : ''}}" wx:for="{{filters.deities}}" wx:key="*this" bindtap="selectFilter" data-key="deity" data-value="{{item}}">{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="drawer-footer">
+    <view class="drawer-btn drawer-btn-reset" bindtap="resetFilter">重置</view>
+    <view class="drawer-btn drawer-btn-confirm" bindtap="confirmFilter">确认筛选</view>
+  </view>
+</view>

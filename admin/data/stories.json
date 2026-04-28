@@ -1,0 +1,36 @@
+[
+  {
+    "id": "s001",
+    "name": "扎基拉姆",
+    "title": "藏地女财神",
+    "subtitle": "事业与财富的守护者",
+    "cover": "/images/story_zaji.jpg",
+    "content": "扎基拉姆是藏传佛教中著名的女财神...",
+    "culture": "扎基拉姆的形象融合了汉藏文化元素...",
+    "suitableZodiac": [
+      "鼠",
+      "牛",
+      "龙"
+    ],
+    "blessing": "事业顺利",
+    "status": "on",
+    "sort": 1
+  },
+  {
+    "id": "s002",
+    "name": "绿度母",
+    "title": "慈悲的化身",
+    "subtitle": "平安与幸福的守护者",
+    "cover": "/images/story_green.jpg",
+    "content": "绿度母是观世音菩萨眼泪的化身...",
+    "culture": "绿度母信仰体现了藏地文化对女性力量的尊崇...",
+    "suitableZodiac": [
+      "兔",
+      "蛇",
+      "羊"
+    ],
+    "blessing": "平安喜乐",
+    "status": "on",
+    "sort": 2
+  }
+]

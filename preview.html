@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一绳一�?· 藏式风格</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system,BlinkMacSystemFont,'PingFang SC','STSong',serif; background: #c8bfae; padding: 20px; }
+
+.phone { width: 375px; min-height: 812px; margin: 0 auto 40px; border: 8px solid #333; border-radius: 40px; overflow: hidden; background: #f5f0e8; }
+
+/* ===== 首页 ===== */
+.home { position: relative; width: 100%; height: 812px; overflow: hidden; }
+.home-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.home-shade { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
+  background: linear-gradient(180deg, rgba(30,15,10,0.55) 0%, rgba(30,15,10,0.18) 22%, rgba(30,15,10,0.02) 45%, rgba(30,15,10,0.15) 56%, rgba(30,15,10,0.72) 100%); }
+.home-top { position: absolute; top: 100px; left: 0; right: 0; z-index: 3; display: flex; flex-direction: column; align-items: center; }
+.home-en { font-size: 9px; color: rgba(255,255,255,0.35); letter-spacing: 5px; margin-bottom: 11px; }
+.home-name { font-size: 28px; font-weight: 300; color: #fff; letter-spacing: 13px; text-indent: 13px; text-shadow: 0 2px 14px rgba(0,0,0,0.45); }
+.home-divider { display: flex; align-items: center; gap: 6px; margin: 15px 0 11px; }
+.home-dot { width: 3px; height: 3px; background: #c9a050; border-radius: 50%; }
+.home-dot:nth-child(2) { width: 5px; height: 5px; }
+.home-tag { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 4px; }
+.home-entries { position: absolute; top: 440px; left: 0; right: 0; z-index: 3; display: flex; padding: 0 22px; gap: 14px; }
+.home-entry { flex: 1; height: 125px; border-radius: 10px; overflow: hidden; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.38); }
+.home-entry-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+.home-entry-veil { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.58) 100%); }
+.home-entry-cap { position: absolute; bottom: 0; left: 0; right: 0; z-index: 3; padding: 14px 8px 12px; text-align: center; }
+.home-entry-zh { font-size: 19px; font-weight: 400; color: #fff; letter-spacing: 7px; text-indent: 7px; display: block; margin-bottom: 3px; }
+.home-entry-en { font-size: 8px; color: rgba(201,160,80,0.7); letter-spacing: 3px; }
+.home-foot { position: absolute; bottom: 50px; left: 0; right: 0; z-index: 3; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 0 40px; }
+.home-foot-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); }
+.home-foot-text { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 4px; white-space: nowrap; }
+
+/* ===== 商品�?===== */
+.cat { min-height: 812px; background: #f5f0e8; }
+.cat-nav { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; height: 44px; }
+.cat-nav-back { font-size: 26px; color: #2a1810; font-weight: 200; }
+.cat-nav-title { font-size: 16px; font-weight: 600; color: #2a1810; letter-spacing: 6px; }
+.cat-nav-filter { padding: 4px 12px; border: 1px solid rgba(139,30,30,0.2); border-radius: 4px; font-size: 12px; color: #8b1e1e; }
+.cat-switch { display: flex; padding: 4px 20px 12px; gap: 14px; }
+.cat-switch-item { padding: 8px 20px; font-size: 13px; color: #7a6a5a; border-radius: 6px; }
+.cat-switch-item.on { color: #fff; background: #8b1e1e; font-weight: 500; }
+.cat-hero { position: relative; margin: 0 20px 16px; height: 200px; border-radius: 12px; overflow: hidden; }
+.cat-hero-bg { width: 100%; height: 100%; object-fit: cover; }
+.cat-hero-mask { position: absolute; bottom: 0; left: 0; right: 0; height: 55%; background: linear-gradient(180deg, transparent, rgba(30,15,10,0.65)); }
+.cat-hero-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 16px 14px; }
+.cat-hero-badge { display: inline-block; padding: 2px 8px; font-size: 11px; color: #fff; background: #8b1e1e; border-radius: 3px; margin-bottom: 6px; }
+.cat-hero-name { display: block; font-size: 17px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.cat-hero-row { display: flex; align-items: center; gap: 8px; }
+.cat-hero-price { font-size: 19px; font-weight: 700; color: #e0c878; }
+.cat-hero-deity { font-size: 12px; color: rgba(255,255,255,0.6); }
+.cat-head { display: flex; align-items: center; padding: 8px 20px 12px; gap: 10px; }
+.cat-head-text { font-size: 12px; color: #b0a090; letter-spacing: 4px; flex-shrink: 0; }
+.cat-head-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(201,160,80,0.2), transparent); }
+.cat-grid { display: flex; flex-wrap: wrap; padding: 0 18px; justify-content: space-between; }
+.cat-card { width: 165px; margin-bottom: 14px; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 8px rgba(139,30,30,0.04); }
+.cat-card-pic { position: relative; width: 165px; height: 165px; overflow: hidden; background: #ede4d8; }
+.cat-card-img { width: 165px; height: 165px; object-fit: cover; }
+.cat-card-tag { position: absolute; top: 6px; left: 6px; padding: 2px 8px; font-size: 10px; color: #8b1e1e; background: rgba(255,255,255,0.95); border-radius: 3px; }
+.cat-card-body { padding: 10px; }
+.cat-card-title { display: block; font-size: 13px; color: #2a1810; margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cat-card-foot { display: flex; justify-content: space-between; align-items: center; }
+.cat-card-amount { font-size: 15px; color: #8b1e1e; font-weight: 700; }
+.cat-card-deity { font-size: 11px; color: #b0a090; }
+
+/* ===== 故事�?===== */
+.story-hero { position: relative; width: 100%; height: 170px; overflow: hidden; }
+.story-hero-bg { width: 100%; height: 100%; object-fit: cover; }
+.story-hero-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(30,15,10,0.2) 0%, rgba(30,15,10,0.4) 60%, rgba(30,15,10,0.7) 100%); }
+.story-hero-cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 20px 16px; }
+.story-hero-title { display: block; font-size: 20px; font-weight: 600; color: #fff; letter-spacing: 6px; margin-bottom: 4px; }
+.story-hero-sub { display: block; font-size: 11px; color: rgba(255,255,255,0.7); }
+.story-list { padding: 10px 20px; }
+.story-item { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid rgba(201,160,80,0.12); }
+.story-item:last-child { border-bottom: none; }
+.story-item-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #f5f0e8, #e8ddd0); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(201,160,80,0.25); }
+.story-item-initial { font-size: 19px; font-weight: 700; color: #8b1e1e; }
+.story-item-main { flex: 1; min-width: 0; }
+.story-item-head { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.story-item-name { font-size: 15px; font-weight: 600; color: #2a1810; }
+.story-item-badge { padding: 2px 6px; font-size: 10px; color: #8b1e1e; border: 1px solid rgba(139,30,30,0.2); border-radius: 3px; }
+.story-item-desc { font-size: 12px; color: #7a6a5a; line-height: 1.7; margin-bottom: 8px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.story-item-foot { display: flex; justify-content: space-between; align-items: center; }
+.story-item-bless { font-size: 11px; color: #c9a050; }
+.story-item-arrow { font-size: 16px; color: #b0a090; }
+.story-foot { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 24px 20px; }
+.story-foot-line { flex: 1; max-width: 40px; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,160,80,0.35), transparent); }
+.story-foot-text { font-size: 12px; color: #b0a090; }
+
+/* ===== 我的 ===== */
+.mine { min-height: 812px; background: #f5f0e8; padding-top: 40px; }
+.mine-header { display: flex; flex-direction: column; align-items: center; padding-bottom: 24px; }
+.mine-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #f5f0e8, #e8ddd0); border: 1px solid rgba(139,30,30,0.2); display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+.mine-avatar-text { font-size: 21px; color: #8b1e1e; font-weight: 400; }
+.mine-name { font-size: 17px; font-weight: 600; color: #2a1810; letter-spacing: 4px; margin-bottom: 5px; }
+.mine-desc { font-size: 11px; color: #7a6a5a; letter-spacing: 1px; }
+.mine-menu { margin: 0 20px; background: #fff; border-radius: 10px; overflow: hidden; }
+.mine-btn { display: flex; align-items: center; gap: 12px; padding: 18px 16px; }
+.mine-btn:not(:last-child) { border-bottom: 1px solid rgba(201,160,80,0.1); }
+.mine-btn-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; flex-shrink: 0; }
+.mine-btn-icon-service { background: #8b1e1e; }
+.mine-btn-icon-about { background: #c9a050; }
+.mine-btn-icon-share { background: #1b3a5c; }
+.mine-btn-text { flex: 1; font-size: 14px; color: #2a1810; letter-spacing: 1px; }
+.mine-btn-arrow { font-size: 14px; color: #b0a090; }
+.mine-quote { text-align: center; padding: 30px 20px 15px; }
+.mine-quote-text { display: block; font-size: 14px; color: #2a1810; font-weight: 500; letter-spacing: 2px; margin-bottom: 4px; }
+.mine-quote-sub { display: block; font-size: 11px; color: #b0a090; letter-spacing: 1px; }
+.mine-version { display: block; text-align: center; font-size: 10px; color: #b0a090; padding: 15px 0 30px; }
+
+/* 抽屉 */
+.drawer-preview { position: absolute; top: 0; right: 0; width: 260px; height: 100%; background: #fff; z-index: 50; padding: 16px; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
+.drawer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(201,160,80,0.15); }
+.drawer-title { font-size: 15px; font-weight: 600; color: #2a1810; letter-spacing: 2px; }
+.drawer-close { font-size: 14px; color: #7a6a5a; }
+.drawer-group { margin-bottom: 20px; }
+.drawer-label { display: block; font-size: 12px; color: #2a1810; font-weight: 500; margin-bottom: 8px; padding-left: 5px; border-left: 2px solid #8b1e1e; }
+.drawer-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.drawer-tag { padding: 7px 12px; font-size: 11px; color: #7a6a5a; background: #f5f0e8; border-radius: 4px; }
+.drawer-tag.active { color: #fff; background: #8b1e1e; }
+.drawer-footer { display: flex; gap: 8px; margin-top: 20px; padding-top: 12px; border-top: 1px solid rgba(201,160,80,0.15); }
+.drawer-btn { flex: 1; padding: 11px 0; text-align: center; font-size: 13px; border-radius: 5px; }
+.drawer-btn-reset { color: #7a6a5a; background: #f5f0e8; }
+.drawer-btn-confirm { color: #fff; background: #8b1e1e; }
+</style>
+</head>
+<body>
+
+<!-- 首页 -->
+<div class="phone">
+  <div class="home">
+    <img class="home-bg" src="file:///D:/一绳一愿小程序代码/images/home_banner1.png" />
+    <div class="home-shade"></div>
+    <div class="home-top">
+      <div class="home-en">YI SHENG YI YUAN</div>
+      <div class="home-name">一绳一�?/div>
+      <div class="home-divider">
+        <div class="home-dot"></div><div class="home-dot"></div><div class="home-dot"></div>
+      </div>
+      <div class="home-tag">藏式手绳 · 护佑项链</div>
+    </div>
+    <div class="home-entries">
+      <div class="home-entry">
+        <img class="home-entry-bg" src="file:///D:/一绳一愿小程序代码/images/bracelet_full.jpg" />
+        <div class="home-entry-veil"></div>
+        <div class="home-entry-cap">
+          <span class="home-entry-zh">�?�?/span>
+          <span class="home-entry-en">BRACELET</span>
+        </div>
+      </div>
+      <div class="home-entry">
+        <img class="home-entry-bg" src="file:///D:/一绳一愿小程序代码/images/zajilamu_thangka.jpg" />
+        <div class="home-entry-veil"></div>
+        <div class="home-entry-cap">
+          <span class="home-entry-zh">�?�?/span>
+          <span class="home-entry-en">NECKLACE</span>
+        </div>
+      </div>
+    </div>
+    <div class="home-foot">
+      <div class="home-foot-line"></div>
+      <span class="home-foot-text">探索全部愿物</span>
+      <div class="home-foot-line"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 商品�?抽屉 -->
+<div class="phone">
+  <div class="cat">
+    <div class="cat-nav">
+      <div style="width:40px;"><span class="cat-nav-back">�?/span></div>
+      <span class="cat-nav-title">�?�?/span>
+      <div style="width:40px;text-align:right;"><span class="cat-nav-filter">筛�?/span></div>
+    </div>
+    <div class="cat-switch">
+      <div class="cat-switch-item on">全部</div>
+      <div class="cat-switch-item">手绳</div>
+      <div class="cat-switch-item">大卡</div>
+    </div>
+    <div class="cat-hero">
+      <img class="cat-hero-bg" src="file:///D:/一绳一愿小程序代码/images/bracelet_full.jpg" />
+      <div class="cat-hero-mask"></div>
+      <div class="cat-hero-cap">
+        <div class="cat-hero-badge">事业顺利</div>
+        <div class="cat-hero-name">朱砂·扎基拉姆手绳</div>
+        <div class="cat-hero-row">
+          <span class="cat-hero-price">¥268</span>
+          <span class="cat-hero-deity">扎基拉姆</span>
+        </div>
+      </div>
+    </div>
+    <div class="cat-head">
+      <span class="cat-head-text">�?�?�?�?/span>
+      <div class="cat-head-line"></div>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <div class="cat-card-pic"><img class="cat-card-img" src="file:///D:/一绳一愿小程序代码/images/bracelet_close1.jpg" /><div class="cat-card-tag">平安喜乐</div></div>
+        <div class="cat-card-body"><div class="cat-card-title">青金·绿度母手�?/div><div class="cat-card-foot"><span class="cat-card-amount">¥298</span><span class="cat-card-deity">绿度�?/span></div></div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-pic"><img class="cat-card-img" src="file:///D:/一绳一愿小程序代码/images/bracelet_close2.jpg" /><div class="cat-card-tag">人缘和合</div></div>
+        <div class="cat-card-body"><div class="cat-card-title">松石·药师佛手�?/div><div class="cat-card-foot"><span class="cat-card-amount">¥328</span><span class="cat-card-deity">药师�?/span></div></div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-pic"><img class="cat-card-img" src="file:///D:/一绳一愿小程序代码/images/bracelet_detail.jpg" /><div class="cat-card-tag">健康安康</div></div>
+        <div class="cat-card-body"><div class="cat-card-title">月白·观音手绳</div><div class="cat-card-foot"><span class="cat-card-amount">¥258</span><span class="cat-card-deity">观音菩萨</span></div></div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-card-pic"><img class="cat-card-img" src="file:///D:/一绳一愿小程序代码/images/home_banner2.jpg" /><div class="cat-card-tag">智慧通达</div></div>
+        <div class="cat-card-body"><div class="cat-card-title">墨银·文殊手绳</div><div class="cat-card-foot"><span class="cat-card-amount">¥288</span><span class="cat-card-deity">文殊菩萨</span></div></div>
+      </div>
+    </div>
+    <div class="drawer-preview">
+      <div class="drawer-header">
+        <span class="drawer-title">筛选愿�?/span>
+        <span class="drawer-close">�?/span>
+      </div>
+      <div class="drawer-group">
+        <span class="drawer-label">系列</span>
+        <div class="drawer-tags">
+          <div class="drawer-tag active">全部</div>
+          <div class="drawer-tag">手绳系列</div>
+          <div class="drawer-tag">大卡系列</div>
+        </div>
+      </div>
+      <div class="drawer-group">
+        <span class="drawer-label">色系</span>
+        <div class="drawer-tags">
+          <div class="drawer-tag active">全部</div>
+          <div class="drawer-tag">朱砂</div>
+          <div class="drawer-tag">青金</div>
+          <div class="drawer-tag">松石</div>
+          <div class="drawer-tag">月白</div>
+          <div class="drawer-tag">墨银</div>
+          <div class="drawer-tag">紫檀</div>
+        </div>
+      </div>
+      <div class="drawer-group">
+        <span class="drawer-label">老师</span>
+        <div class="drawer-tags">
+          <div class="drawer-tag active">全部</div>
+          <div class="drawer-tag">扎基拉姆</div>
+          <div class="drawer-tag">绿度�?/div>
+          <div class="drawer-tag">药师�?/div>
+          <div class="drawer-tag">文殊菩萨</div>
+        </div>
+      </div>
+      <div class="drawer-footer">
+        <div class="drawer-btn drawer-btn-reset">重置</div>
+        <div class="drawer-btn drawer-btn-confirm">确认筛�?/div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 我的页面 -->
+<div class="phone">
+  <div class="mine">
+    <div class="mine-header">
+      <div class="mine-avatar"><span class="mine-avatar-text">�?/span></div>
+      <span class="mine-name">�?�?�?/span>
+      <span class="mine-desc">一绳一�?· 善信</span>
+    </div>
+    <div class="mine-menu">
+      <div class="mine-btn">
+        <div class="mine-btn-icon mine-btn-icon-service">�?/div>
+        <span class="mine-btn-text">联系客服</span>
+        <span class="mine-btn-arrow">�?/span>
+      </div>
+      <div class="mine-btn">
+        <div class="mine-btn-icon mine-btn-icon-about">�?/div>
+        <span class="mine-btn-text">关于一绳一�?/span>
+        <span class="mine-btn-arrow">�?/span>
+      </div>
+      <div class="mine-btn">
+        <div class="mine-btn-icon mine-btn-icon-share">�?/div>
+        <span class="mine-btn-text">分享给好�?/span>
+        <span class="mine-btn-arrow">�?/span>
+      </div>
+    </div>
+    <div class="mine-quote">
+      <span class="mine-quote-text">一绳一�?· 吉祥圆满</span>
+      <span class="mine-quote-sub">藏式手工编织 · 传承东方之美</span>
+    </div>
+    <span class="mine-version">一绳一�?v1.0.0</span>
+  </div>
+</div>
+
+<!-- 故事�?-->
+<div class="phone">
+  <div class="cat">
+    <div class="story-hero">
+      <img class="story-hero-bg" src="file:///D:/一绳一愿小程序代码/images/zajilamu_thangka.jpg" />
+      <div class="story-hero-mask"></div>
+      <div class="story-hero-cap">
+        <span class="story-hero-title">�?�?�?�?/span>
+        <span class="story-hero-sub">每一根手绳，都承载着东方美学的智�?/span>
+      </div>
+    </div>
+    <div class="story-list">
+      <div class="story-item">
+        <div class="story-item-avatar"><span class="story-item-initial">�?/span></div>
+        <div class="story-item-main">
+          <div class="story-item-head"><span class="story-item-name">扎基拉姆</span><span class="story-item-badge">藏地女财�?/span></div>
+          <span class="story-item-desc">扎基拉姆是藏传佛教中著名的女财神，以灵验著称。扎基寺位于拉萨北郊，每周三信众络绎不绝�?/span>
+          <div class="story-item-foot"><span class="story-item-bless">�?事业顺利</span><span class="story-item-arrow">�?/span></div>
+        </div>
+      </div>
+      <div class="story-item">
+        <div class="story-item-avatar"><span class="story-item-initial">�?/span></div>
+        <div class="story-item-main">
+          <div class="story-item-head"><span class="story-item-name">八大守护</span><span class="story-item-badge">十二生肖本命�?/span></div>
+          <span class="story-item-desc">对应十二生肖的八位佛与菩萨，每个人从出生起就有一位佛菩萨在默默守护�?/span>
+          <div class="story-item-foot"><span class="story-item-bless">�?平安喜乐</span><span class="story-item-arrow">�?/span></div>
+        </div>
+      </div>
+      <div class="story-item">
+        <div class="story-item-avatar"><span class="story-item-initial">�?/span></div>
+        <div class="story-item-main">
+          <div class="story-item-head"><span class="story-item-name">药师�?/span><span class="story-item-badge">大医�?/span></div>
+          <span class="story-item-desc">药师佛全称为药师琉璃光如来，发下十二大愿，愿为众生解除疾苦�?/span>
+          <div class="story-item-foot"><span class="story-item-bless">�?健康安康</span><span class="story-item-arrow">�?/span></div>
+        </div>
+      </div>
+    </div>
+    <div class="story-foot">
+      <div class="story-foot-line"></div><span class="story-foot-text">手绳承载祝愿，丝线连接文�?/span><div class="story-foot-line"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

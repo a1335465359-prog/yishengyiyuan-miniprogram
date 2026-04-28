@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一绳一愿 · 运营管理系统</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #141414;
+      --bg3: #1a1a1a;
+      --gold: #c9a050;
+      --gold2: #d4af37;
+      --text: #f0e6d0;
+      --text2: #8a7a5a;
+      --border: #c9a05033;
+      --danger: #c05050;
+      --success: #4a7c59;
+      --warning: #c9a050;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+    .app { display: flex; height: 100vh; }
+
+    /* ===== 侧边栏 ===== */
+    .sidebar {
+      width: 220px;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+    .logo {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo h1 {
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+    .logo p {
+      font-size: 12px;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+    .nav {
+      flex: 1;
+      padding: 12px 0;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--text2);
+      font-size: 14px;
+    }
+    .nav-item:hover { background: var(--bg3); color: var(--text); }
+    .nav-item.active { background: var(--gold22); color: var(--gold); border-right: 3px solid var(--gold); }
+    .nav-icon { width: 20px; text-align: center; margin-right: 10px; font-size: 16px; }
+
+    /* ===== 主内容区 ===== */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .header {
+      height: 60px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+    }
+    .header h2 { font-size: 16px; font-weight: normal; }
+    .header-actions { display: flex; gap: 10px; }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    /* ===== 按钮 ===== */
+    .btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-secondary { background: transparent; color: var(--text2); border: 1px solid var(--border); }
+    .btn-sm { padding: 6px 14px; font-size: 12px; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ===== 卡片 ===== */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .card-title { font-size: 16px; color: var(--gold); }
+
+    /* ===== 统计卡片 ===== */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .stat-label { font-size: 12px; color: var(--text2); margin-bottom: 8px; }
+    .stat-value { font-size: 28px; color: var(--gold); font-weight: bold; }
+    .stat-change { font-size: 12px; color: var(--success); margin-top: 4px; }
+
+    /* ===== 表格 ===== */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--text2); font-weight: normal; font-size: 12px; text-transform: uppercase; }
+    tr:hover { background: var(--bg3); }
+    .table-img { width: 48px; height: 48px; object-fit: cover; border-radius: 4px; background: var(--bg3); }
+    .table-actions { display: flex; gap: 6px; }
+
+    /* ===== 标签 ===== */
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+    .tag-gold { background: var(--gold22); color: var(--gold); }
+    .tag-green { background: #4a7c5922; color: #6ab87a; }
+    .tag-red { background: #c0505022; color: #e07070; }
+    .tag-gray { background: #444; color: #888; }
+
+    /* ===== 搜索/筛选工具栏 ===== */
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .toolbar input, .toolbar select {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      min-width: 140px;
+    }
+    .toolbar input:focus, .toolbar select:focus { outline: none; border-color: var(--gold); }
+    .toolbar input::placeholder { color: var(--text2); }
+
+    /* ===== 分页 ===== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 20px;
+    }
+    .pagination button {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .pagination button:hover { border-color: var(--gold); }
+    .pagination button.active { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+    .pagination button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* ===== 弹窗 ===== */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s;
+    }
+    .modal-overlay.show { opacity: 1; visibility: visible; }
+    .modal {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h3 { font-size: 16px; }
+    .modal-close {
+      background: none; border: none; color: var(--text2);
+      font-size: 20px; cursor: pointer;
+    }
+    .modal-body { padding: 24px; }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    /* ===== 表单 ===== */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: 12px;
+      color: var(--text2);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .form-group textarea { min-height: 80px; resize: vertical; }
+    .form-group input[type="number"] { width: 100%; }
+    .form-hint { font-size: 11px; color: var(--text2); }
+
+    /* ===== 图片上传 ===== */
+    .image-upload {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .image-preview {
+      width: 100px; height: 100px;
+      border: 2px dashed var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .image-preview:hover { border-color: var(--gold); }
+    .image-preview img { width: 100%; height: 100%; object-fit: cover; }
+    .image-preview .remove {
+      position: absolute; top: 4px; right: 4px;
+      background: var(--danger); color: #fff;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; cursor: pointer;
+    }
+    .image-upload-btn {
+      width: 100px; height: 100px;
+      border: 2px dashed var(--border);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text2);
+      font-size: 12px;
+      gap: 4px;
+    }
+    .image-upload-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ===== 状态开关 ===== */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px; height: 24px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      transition: 0.3s;
+    }
+    .slider:before {
+      content: "";
+      position: absolute;
+      height: 18px; width: 18px;
+      left: 2px; bottom: 2px;
+      background: var(--text2);
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    input:checked + .slider { background: var(--success); border-color: var(--success); }
+    input:checked + .slider:before { transform: translateX(20px); background: #fff; }
+
+    /* ===== Toast ===== */
+    .toast {
+      position: fixed;
+      top: 20px; right: 20px;
+      background: var(--gold);
+      color: var(--bg);
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-weight: bold;
+      transform: translateX(200%);
+      transition: transform 0.3s;
+      z-index: 2000;
+    }
+    .toast.show { transform: translateX(0); }
+    .toast.error { background: var(--danger); color: #fff; }
+
+    /* ===== 加载 ===== */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      color: var(--text2);
+    }
+
+    /* ===== 空状态 ===== */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text2);
+    }
+    .empty-icon { font-size: 48px; margin-bottom: 12px; }
+
+    /* ===== 隐藏 ===== */
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="logo">
+        <h1>一绳一愿</h1>
+        <p>运营管理系统</p>
+      </div>
+      <nav class="nav">
+        <div class="nav-item active" data-page="dashboard" onclick="navTo('dashboard')">
+          <span class="nav-icon">📊</span> 仪表盘
+        </div>
+        <div class="nav-item" data-page="products" onclick="navTo('products')">
+          <span class="nav-icon">🛍️</span> 商品管理
+        </div>
+        <div class="nav-item" data-page="categories" onclick="navTo('categories')">
+          <span class="nav-icon">📂</span> 分类管理
+        </div>
+        <div class="nav-item" data-page="stories" onclick="navTo('stories')">
+          <span class="nav-icon">📖</span> 故事管理
+        </div>
+      </nav>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="main">
+      <header class="header">
+        <h2 id="pageTitle">仪表盘</h2>
+        <div class="header-actions" id="headerActions"></div>
+      </header>
+
+      <div class="content" id="content">
+        <!-- 动态内容 -->
+      </div>
+    </main>
+  </div>
+
+  <!-- 弹窗 -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal" id="modalContent"></div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API_BASE = '/api';
+    let currentPage = 'dashboard';
+    let currentData = {};
+
+    // ===== 导航 =====
+    function navTo(page) {
+      currentPage = page;
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      document.querySelector(`[data-page="${page}"]`).classList.add('active');
+
+      const titles = { dashboard: '仪表盘', products: '商品管理', categories: '分类管理', stories: '故事管理' };
+      document.getElementById('pageTitle').textContent = titles[page];
+
+      document.getElementById('content').innerHTML = '<div class="loading">加载中...</div>';
+
+      switch(page) {
+        case 'dashboard': renderDashboard(); break;
+        case 'products': renderProducts(); break;
+        case 'categories': renderCategories(); break;
+        case 'stories': renderStories(); break;
+      }
+    }
+
+    // ===== Toast =====
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.className = `toast ${type} show`;
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // ===== API请求 =====
+    async function api(method, path, data) {
+      const res = await fetch(`${API_BASE}${path}`, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: data ? JSON.stringify(data) : undefined
+      });
+      return res.json();
+    }
+
+    // ===== 仪表盘 =====
+    async function renderDashboard() {
+      const stats = await api('GET', '/stats');
+      const data = stats.data;
+
+      document.getElementById('headerActions').innerHTML = '';
+      document.getElementById('content').innerHTML = `
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">商品总数</div>
+            <div class="stat-value">${data.totalProducts}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">在售商品</div>
+            <div class="stat-value">${data.onSale}</div>
+            <div class="stat-change">上架率 ${Math.round(data.onSale/data.totalProducts*100)}%</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">已下架</div>
+            <div class="stat-value">${data.offSale}</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">库存预警</div>
+            <div class="stat-value">${data.lowStock}</div>
+            <div class="stat-change">库存低于20</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">分类统计</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>分类</th><th>商品数量</th></tr></thead>
+              <tbody>
+                ${data.categoryStats.map(c => `<tr><td>${c.name}</td><td>${c.count}</td></tr>`).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // ===== 商品管理 =====
+    let productPage = 1;
+    let productFilters = {};
+
+    async function renderProducts() {
+      document.getElementById('headerActions').innerHTML = `
+        <button class="btn btn-primary" onclick="openProductModal()">+ 新增商品</button>
+      `;
+
+      const filters = await api('GET', '/filters');
+      currentData.filters = filters.data;
+
+      let filterHtml = `
+        <div class="toolbar">
+          <input type="text" placeholder="搜索商品名称..." id="searchKeyword" onkeyup="if(event.key==='Enter')searchProducts()">
+          <select id="filterCategory" onchange="searchProducts()">
+            <option value="all">全部分类</option>
+            ${currentData.filters.categories?.map(c => `<option value="${c.id}">${c.name}</option>`).join('') || ''}
+          </select>
+          <select id="filterColor" onchange="searchProducts()">
+            <option value="全部">全部色系</option>
+            ${currentData.filters.colors?.filter(c => c.value !== '全部').map(c => `<option value="${c.value}">${c.name}</option>`).join('') || ''}
+          </select>
+          <select id="filterDeity" onchange="searchProducts()">
+            <option value="全部">全部神佛</option>
+            ${currentData.filters.deities?.filter(d => d.value !== '全部').map(d => `<option value="${d.value}">${d.name}</option>`).join('') || ''}
+          </select>
+          <select id="filterStatus" onchange="searchProducts()">
+            <option value="">全部状态</option>
+            <option value="on">上架中</option>
+            <option value="off">已下架</option>
+          </select>
+          <button class="btn btn-secondary" onclick="searchProducts()">🔍 搜索</button>
+          <button class="btn btn-secondary" onclick="resetProductFilters()">重置</button>
+        </div>
+      `;
+
+      await loadProductList();
+    }
+
+    async function loadProductList() {
+      const query = new URLSearchParams({ ...productFilters, page: productPage, limit: 10 }).toString();
+      const res = await api('GET', `/products?${query}`);
+      const { list, total, page, limit } = res.data;
+
+      const totalPages = Math.ceil(total / limit);
+
+      let html = `
+        ${document.querySelector('.toolbar')?.outerHTML || ''}
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:60px">图片</th>
+                  <th>商品信息</th>
+                  <th>价格</th>
+                  <th>库存</th>
+                  <th>分类</th>
+                  <th>状态</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${list.length === 0 ? '<tr><td colspan="7" class="empty"><div class="empty-icon">📦</div>暂无商品</td></tr>' :
+                  list.map(p => `
+                    <tr>
+                      <td><img src="${p.image}" class="table-img" onerror="this.style.display='none'"></td>
+                      <td>
+                        <div style="font-weight:bold;color:var(--gold)">${p.name}</div>
+                        <div style="font-size:12px;color:var(--text2)">${p.subtitle || ''}</div>
+                        <div style="font-size:11px;color:var(--text2);margin-top:4px">
+                          <span class="tag tag-gold">${p.color}</span>
+                          <span class="tag tag-gray">${p.deity}</span>
+                          <span class="tag tag-green">${p.blessing}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div style="color:var(--gold);font-weight:bold">¥${p.price}</div>
+                        ${p.originalPrice ? `<div style="font-size:11px;color:var(--text2);text-decoration:line-through">¥${p.originalPrice}</div>` : ''}
+                      </td>
+                      <td>${p.stock}</td>
+                      <td>${p.category === 'bracelet' ? '手绳' : '项链'}</td>
+                      <td>
+                        <label class="switch">
+                          <input type="checkbox" ${p.status === 'on' ? 'checked' : ''} onchange="toggleProduct('${p.id}', this)">
+                          <span class="slider"></span>
+                        </label>
+                        <div style="font-size:11px;color:var(--text2);margin-top:4px">${p.status === 'on' ? '上架中' : '已下架'}</div>
+                      </td>
+                      <td>
+                        <div class="table-actions">
+                          <button class="btn btn-sm btn-secondary" onclick="editProduct('${p.id}')">编辑</button>
+                          <button class="btn btn-sm btn-danger" onclick="deleteProduct('${p.id}')">删除</button>
+                        </div>
+                      </td>
+                    </tr>
+                  `).join('')
+                }
+              </tbody>
+            </table>
+          </div>
+          ${totalPages > 1 ? `
+            <div class="pagination">
+              <button ${page <= 1 ? 'disabled' : ''} onclick="changePage(${page - 1})">上一页</button>
+              ${Array.from({length: totalPages}, (_, i) => `
+                <button class="${i + 1 === page ? 'active' : ''}" onclick="changePage(${i + 1})">${i + 1}</button>
+              `).join('')}
+              <button ${page >= totalPages ? 'disabled' : ''} onclick="changePage(${page + 1})">下一页</button>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      document.getElementById('content').innerHTML = html;
+    }
+
+    function searchProducts() {
+      productFilters = {
+        keyword: document.getElementById('searchKeyword')?.value || '',
+        category: document.getElementById('filterCategory')?.value || 'all',
+        color: document.getElementById('filterColor')?.value || '全部',
+        deity: document.getElementById('filterDeity')?.value || '全部',
+        status: document.getElementById('filterStatus')?.value || ''
+      };
+      productPage = 1;
+      loadProductList();
+    }
+
+    function resetProductFilters() {
+      productFilters = {};
+      productPage = 1;
+      renderProducts();
+    }
+
+    function changePage(p) {
+      productPage = p;
+      loadProductList();
+    }
+
+    async function toggleProduct(id, el) {
+      const res = await api('POST', `/products/${id}/toggle`);
+      if (res.code === 0) {
+        showToast(res.data.status === 'on' ? '已上架' : '已下架');
+        loadProductList();
+      }
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm('确定删除此商品？')) return;
+      const res = await api('DELETE', `/products/${id}`);
+      if (res.code === 0) {
+        showToast('删除成功');
+        loadProductList();
+      }
+    }
+
+    // ===== 商品编辑弹窗 =====
+    async function openProductModal(productId = null) {
+      const filters = currentData.filters;
+      let product = productId ? (await api('GET', `/products/${productId}`)).data : {
+        name: '', subtitle: '', category: 'bracelet', price: 0, originalPrice: 0, stock: 0,
+        color: '朱砂', deity: '扎基拉姆', suitableZodiacs: [], blessing: '事业顺利',
+        tags: [], image: '', detailImages: [], material: '', size: '', weight: '', craft: '', status: 'on', sort: 1
+      };
+
+      const zodiacs = ['鼠','牛','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'];
+
+      const modalHtml = `
+        <div class="modal-header">
+          <h3>${productId ? '编辑商品' : '新增商品'}</h3>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">商品名称 *</label>
+              <input type="text" id="p_name" value="${product.name}" placeholder="如：朱砂·扎基拉姆手绳">
+            </div>
+            <div class="form-group">
+              <label class="form-label">副标题</label>
+              <input type="text" id="p_subtitle" value="${product.subtitle || ''}" placeholder="简短描述">
+            </div>
+            <div class="form-group">
+              <label class="form-label">分类 *</label>
+              <select id="p_category">
+                <option value="bracelet" ${product.category === 'bracelet' ? 'selected' : ''}>手绳款</option>
+                <option value="necklace" ${product.category === 'necklace' ? 'selected' : ''}>项链款</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">色系 *</label>
+              <select id="p_color">
+                ${filters.colors?.filter(c => c.value !== '全部').map(c =>
+                  `<option value="${c.value}" ${product.color === c.value ? 'selected' : ''}>${c.name}</option>`
+                ).join('') || ''}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">现价 *</label>
+              <input type="number" id="p_price" value="${product.price}" placeholder="268">
+            </div>
+            <div class="form-group">
+              <label class="form-label">原价</label>
+              <input type="number" id="p_originalPrice" value="${product.originalPrice || ''}" placeholder="368">
+              <div class="form-hint">用于展示划线价</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">库存 *</label>
+              <input type="number" id="p_stock" value="${product.stock}" placeholder="99">
+            </div>
+            <div class="form-group">
+              <label class="form-label">排序权重</label>
+              <input type="number" id="p_sort" value="${product.sort}" placeholder="数字越小越靠前">
+            </div>
+            <div class="form-group">
+              <label class="form-label">神佛/老师 *</label>
+              <select id="p_deity">
+                ${filters.deities?.filter(d => d.value !== '全部').map(d =>
+                  `<option value="${d.value}" ${product.deity === d.value ? 'selected' : ''}>${d.name}</option>`
+                ).join('') || ''}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">祝福词 *</label>
+              <input type="text" id="p_blessing" value="${product.blessing}" placeholder="如：事业顺利">
+              <div class="form-hint">避免使用招财/辟邪/转运/开光等敏感词</div>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">适配生肖（多选）</label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                ${zodiacs.map(z => `
+                  <label style="display:flex;align-items:center;gap:4px;cursor:pointer">
+                    <input type="checkbox" name="zodiac" value="${z}" ${product.suitableZodiacs?.includes(z) ? 'checked' : ''}>
+                    <span style="font-size:13px">${z}</span>
+                  </label>
+                `).join('')}
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">材质</label>
+              <input type="text" id="p_material" value="${product.material}" placeholder="如：天然朱砂、925银、手工编织">
+            </div>
+            <div class="form-group">
+              <label class="form-label">尺寸</label>
+              <input type="text" id="p_size" value="${product.size}" placeholder="如：可调节 14-18cm">
+            </div>
+            <div class="form-group">
+              <label class="form-label">重量</label>
+              <input type="text" id="p_weight" value="${product.weight || ''}" placeholder="如：约15g">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">工艺说明</label>
+              <textarea id="p_craft" placeholder="描述制作工艺...">${product.craft}</textarea>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">主图</label>
+              <div class="image-upload">
+                <div class="image-preview" id="mainImagePreview" onclick="document.getElementById('mainImageInput').click()">
+                  ${product.image ? `<img src="${product.image}" id="mainImageImg"><div class="remove" onclick="event.stopPropagation();removeMainImage()">&times;</div>` : '<span style="color:var(--text2);font-size:24px">+</span>'}
+                </div>
+                <input type="file" id="mainImageInput" accept="image/*" style="display:none" onchange="uploadMainImage(this)">
+              </div>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">状态</label>
+              <label class="switch">
+                <input type="checkbox" id="p_status" ${product.status === 'on' ? 'checked' : ''}>
+                <span class="slider"></span>
+              </label>
+              <span style="margin-left:10px;font-size:13px;color:var(--text2)">${product.status === 'on' ? '上架中' : '已下架'}</span>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+          <button class="btn btn-primary" onclick="saveProduct('${productId || ''}')">保存</button>
+        </div>
+      `;
+
+      document.getElementById('modalContent').innerHTML = modalHtml;
+      document.getElementById('modal').classList.add('show');
+    }
+
+    async function uploadMainImage(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      showToast('上传中...');
+      const res = await fetch(`${API_BASE}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+
+      if (data.code === 0) {
+        document.getElementById('mainImagePreview').innerHTML = `
+          <img src="${data.data.url}" id="mainImageImg">
+          <div class="remove" onclick="event.stopPropagation();removeMainImage()">&times;</div>
+        `;
+        showToast('上传成功');
+      }
+    }
+
+    function removeMainImage() {
+      document.getElementById('mainImagePreview').innerHTML = '<span style="color:var(--text2);font-size:24px">+</span>';
+    }
+
+    async function saveProduct(id) {
+      const zodiacs = Array.from(document.querySelectorAll('input[name="zodiac"]:checked')).map(cb => cb.value);
+      const mainImg = document.getElementById('mainImageImg')?.src || '';
+
+      const data = {
+        name: document.getElementById('p_name').value,
+        subtitle: document.getElementById('p_subtitle').value,
+        category: document.getElementById('p_category').value,
+        color: document.getElementById('p_color').value,
+        price: parseInt(document.getElementById('p_price').value) || 0,
+        originalPrice: parseInt(document.getElementById('p_originalPrice').value) || 0,
+        stock: parseInt(document.getElementById('p_stock').value) || 0,
+        sort: parseInt(document.getElementById('p_sort').value) || 1,
+        deity: document.getElementById('p_deity').value,
+        blessing: document.getElementById('p_blessing').value,
+        suitableZodiacs: zodiacs,
+        material: document.getElementById('p_material').value,
+        size: document.getElementById('p_size').value,
+        weight: document.getElementById('p_weight').value,
+        craft: document.getElementById('p_craft').value,
+        image: mainImg,
+        status: document.getElementById('p_status').checked ? 'on' : 'off'
+      };
+
+      if (!data.name || !data.price) {
+        showToast('请填写必填项', 'error');
+        return;
+      }
+
+      const res = id
+        ? await api('PUT', `/products/${id}`, data)
+        : await api('POST', '/products', data);
+
+      if (res.code === 0) {
+        showToast(id ? '更新成功' : '创建成功');
+        closeModal();
+        loadProductList();
+      } else {
+        showToast(res.msg || '保存失败', 'error');
+      }
+    }
+
+    function editProduct(id) {
+      openProductModal(id);
+    }
+
+    // ===== 分类管理 =====
+    async function renderCategories() {
+      document.getElementById('headerActions').innerHTML = `
+        <button class="btn btn-primary" onclick="openCategoryModal()">+ 新增分类</button>
+      `;
+
+      const res = await api('GET', '/categories');
+      const categories = res.data;
+
+      document.getElementById('content').innerHTML = `
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>分类名称</th><th>类型</th><th>排序</th><th>操作</th></tr>
+              </thead>
+              <tbody>
+                ${categories.map(c => `
+                  <tr>
+                    <td>${c.name}</td>
+                    <td>${c.type === 'category' ? '商品分类' : '其他'}</td>
+                    <td>${c.sort}</td>
+                    <td>
+                      <div class="table-actions">
+                        <button class="btn btn-sm btn-secondary" onclick="editCategory('${c.id}', '${c.name}', ${c.sort})">编辑</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteCategory('${c.id}')">删除</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function openCategoryModal(id = '', name = '', sort = 1) {
+      const modalHtml = `
+        <div class="modal-header">
+          <h3>${id ? '编辑分类' : '新增分类'}</h3>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">分类名称</label>
+              <input type="text" id="cat_name" value="${name}" placeholder="如：手链款">
+            </div>
+            <div class="form-group">
+              <label class="form-label">排序</label>
+              <input type="number" id="cat_sort" value="${sort}" placeholder="数字越小越靠前">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+          <button class="btn btn-primary" onclick="saveCategory('${id}')">保存</button>
+        </div>
+      `;
+      document.getElementById('modalContent').innerHTML = modalHtml;
+      document.getElementById('modal').classList.add('show');
+    }
+
+    async function saveCategory(id) {
+      const data = {
+        name: document.getElementById('cat_name').value,
+        sort: parseInt(document.getElementById('cat_sort').value) || 1,
+        type: 'category'
+      };
+      if (!data.name) { showToast('请输入分类名称', 'error'); return; }
+
+      const res = id
+        ? await api('PUT', `/categories/${id}`, data)
+        : await api('POST', '/categories', data);
+
+      if (res.code === 0) {
+        showToast(id ? '更新成功' : '创建成功');
+        closeModal();
+        renderCategories();
+      }
+    }
+
+    async function deleteCategory(id) {
+      if (!confirm('确定删除此分类？')) return;
+      const res = await api('DELETE', `/categories/${id}`);
+      if (res.code === 0) { showToast('删除成功'); renderCategories(); }
+    }
+
+    function editCategory(id, name, sort) {
+      openCategoryModal(id, name, sort);
+    }
+
+    // ===== 故事管理 =====
+    async function renderStories() {
+      document.getElementById('headerActions').innerHTML = `
+        <button class="btn btn-primary" onclick="openStoryModal()">+ 新增故事</button>
+      `;
+
+      const res = await api('GET', '/stories');
+      const stories = res.data;
+
+      document.getElementById('content').innerHTML = `
+        <div class="card">
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>名称</th><th>标题</th><th>副标题</th><th>祝福</th><th>操作</th></tr>
+              </thead>
+              <tbody>
+                ${stories.map(s => `
+                  <tr>
+                    <td>${s.name}</td>
+                    <td>${s.title}</td>
+                    <td>${s.subtitle}</td>
+                    <td><span class="tag tag-gold">${s.blessing}</span></td>
+                    <td>
+                      <div class="table-actions">
+                        <button class="btn btn-sm btn-secondary" onclick="editStory('${s.id}')">编辑</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteStory('${s.id}')">删除</button>
+                      </div>
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    function openStoryModal(story = null) {
+      const s = story || {};
+      const modalHtml = `
+        <div class="modal-header">
+          <h3>${story ? '编辑故事' : '新增故事'}</h3>
+          <button class="modal-close" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">名称</label>
+              <input type="text" id="s_name" value="${s.name || ''}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">标题</label>
+              <input type="text" id="s_title" value="${s.title || ''}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">副标题</label>
+              <input type="text" id="s_subtitle" value="${s.subtitle || ''}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">祝福词</label>
+              <input type="text" id="s_blessing" value="${s.blessing || ''}">
+            </div>
+            <div class="form-group full">
+              <label class="form-label">故事内容</label>
+              <textarea id="s_content" rows="4">${s.content || ''}</textarea>
+            </div>
+            <div class="form-group full">
+              <label class="form-label">文化解读</label>
+              <textarea id="s_culture" rows="3">${s.culture || ''}</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="closeModal()">取消</button>
+          <button class="btn btn-primary" onclick="saveStory('${s.id || ''}')">保存</button>
+        </div>
+      `;
+      document.getElementById('modalContent').innerHTML = modalHtml;
+      document.getElementById('modal').classList.add('show');
+    }
+
+    async function saveStory(id) {
+      const data = {
+        name: document.getElementById('s_name').value,
+        title: document.getElementById('s_title').value,
+        subtitle: document.getElementById('s_subtitle').value,
+        blessing: document.getElementById('s_blessing').value,
+        content: document.getElementById('s_content').value,
+        culture: document.getElementById('s_culture').value,
+        status: 'on'
+      };
+
+      const res = id
+        ? await api('PUT', `/stories/${id}`, data)
+        : await api('POST', '/stories', data);
+
+      if (res.code === 0) {
+        showToast(id ? '更新成功' : '创建成功');
+        closeModal();
+        renderStories();
+      }
+    }
+
+    async function deleteStory(id) {
+      if (!confirm('确定删除？')) return;
+      const res = await api('DELETE', `/stories/${id}`);
+      if (res.code === 0) { showToast('删除成功'); renderStories(); }
+    }
+
+    function editStory(id) {
+      api('GET', `/stories/${id}`).then(res => {
+        openStoryModal(res.data);
+      });
+    }
+
+    // ===== 弹窗控制 =====
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
+
+    // ===== 初始化 =====
+    navTo('dashboard');
+  </script>
+</body>
+</html>

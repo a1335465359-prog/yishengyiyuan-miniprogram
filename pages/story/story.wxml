@@ -1,0 +1,40 @@
+<view class="story">
+  <!-- 头图 -->
+  <view class="story-hero">
+    <image class="story-hero-bg" src="/images/zajilamu_thangka.jpg" mode="aspectFill" />
+    <view class="story-hero-mask"></view>
+    <view class="story-hero-cap">
+      <text class="story-hero-title">藏 地 文 化</text>
+      <text class="story-hero-sub">每一根手绳，都承载着东方美学的智慧</text>
+    </view>
+  </view>
+
+  <!-- 故事列表 -->
+  <view class="story-list">
+    <view class="story-item" wx:for="{{stories}}" wx:key="id" bindtap="goToDeity" data-id="{{item.id}}">
+      <view class="story-item-avatar">
+        <text class="story-item-initial">{{item.name[0]}}</text>
+      </view>
+      <view class="story-item-main">
+        <view class="story-item-head">
+          <text class="story-item-name">{{item.name}}</text>
+          <text class="story-item-badge">{{item.title}}</text>
+        </view>
+        <text class="story-item-desc">{{item.story}}</text>
+        <view class="story-item-foot">
+          <text class="story-item-bless">※ {{item.blessing}}</text>
+          <text class="story-item-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部 -->
+  <view class="story-foot">
+    <view class="story-foot-line"></view>
+    <text class="story-foot-text">手绳承载祝愿，丝线连接文化</text>
+    <view class="story-foot-line"></view>
+  </view>
+
+  <view style="height: 60rpx;"></view>
+</view>

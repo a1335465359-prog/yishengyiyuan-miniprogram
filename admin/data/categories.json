@@ -1,0 +1,16 @@
+[
+  {
+    "id": "cat_bracelet",
+    "name": "手绳款",
+    "type": "category",
+    "sort": 1,
+    "createTime": 1777302438122
+  },
+  {
+    "id": "cat_necklace",
+    "name": "项链款",
+    "type": "category",
+    "sort": 2,
+    "createTime": 1777302438122
+  }
+]
